@@ -167,34 +167,35 @@ class ADODB_sqlite3 extends ADOConnection {
 	
 
 	// returns true or false
-	function _connect($argHostname, $argUsername, $argPassword, $argDatabasename) //**tochange: all the function need to be changed, just hacks for the moment
+	function _connect($argHostname, $argUsername, $argPassword, $argDatabasename) 
 	{
-		if (empty($argHostname) && $argDatabasename) $argHostname = $argDatabasename; 
-		$this->_connectionID = new SQLite3($argDatabasename); 
-		$this->_createFunctions();
-		
-		return true; // hack
-		/*
-		if (!function_exists('sqlite_open')) return null;
-		if (empty($argHostname) && $argDatabasename) $argHostname = $argDatabasename;
-		
-		$this->_connectionID = sqlite_open($argHostname);
-		if ($this->_connectionID === false) return false;
-		$this->_createFunctions();
-		return true;
-		*/
+		//http://stackoverflow.com/questions/11545175/use-sqlite-with-php-adodb
+	  if (empty($argHostname) && $argDatabasename) 
+	    $argHostname = $argDatabasename;
+    
+    $this->_connectionID = new SQLite3($argHostname); 
+    
+    if ($this->_connectionID === false) 
+      return false;
+    
+    $this->_createFunctions();        
+    return true;
 	}
 	
 	// returns true or false
-	function _pconnect($argHostname, $argUsername, $argPassword, $argDatabasename) //**tochange
+	function _pconnect($argHostname, $argUsername, $argPassword, $argDatabasename) 
 	{
-		if (!function_exists('sqlite_open')) return null;
-		if (empty($argHostname) && $argDatabasename) $argHostname = $argDatabasename;
-		
-		$this->_connectionID = sqlite_popen($argHostname);
-		if ($this->_connectionID === false) return false;
-		$this->_createFunctions();
-		return true;
+		//http://stackoverflow.com/questions/11545175/use-sqlite-with-php-adodb
+	  if (empty($argHostname) && $argDatabasename) 
+	    $argHostname = $argDatabasename;
+    
+    $this->_connectionID = new SQLite3($argHostname); 
+    
+    if ($this->_connectionID === false) 
+      return false;
+    
+    $this->_createFunctions();        
+    return true;
 	}
 
 	// returns query ID if successful, otherwise false
